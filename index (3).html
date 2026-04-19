@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kira Morikawa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<script>
+/* ============================================================
+   ██████████████████████████████████████████████████████
+   ██                                                    ██
+   ██   📝 EDIT ONLY THIS SECTION TO CUSTOMIZE THE PAGE ██
+   ██                                                    ██
+   ██████████████████████████████████████████████████████
+   ============================================================ */
+
+
+/* ============================================================
+   === SETTINGS（機能のON/OFF）===
+   true = ON（有効）、false = OFF（無効）
+   ============================================================ */
+const SETTINGS = {
+  animations: true,          // アニメーション: trueでフェードイン等が動く
+  blurBackground: true,      // 背景ぼかし: trueで背景画像がぼける
+  showLanguageSelector: true, // 言語選択画面: trueで最初に言語選択を表示
+  vipMode: true              // VIP強調モード: trueでFanvueリンクを特別に強調
+};
+
+
+/* ============================================================
+   === COLORS（色設定）===
+   ここを変えるだけでサイト全体のテーマが変わります
+   #から始まる16進数カラーコードを入力してください
+   ============================================================ */
+const COLORS = {
+  background: "#0c0c0c",     // 背景色（ダーク黒）
+  accent: "#ff4da6",         // アクセント色（ピンク）
+  accentSecondary: "#c77dff", // サブアクセント色（パープル）
+  text: "#f0ede8",           // メインテキスト色（オフホワイト）
+  textMuted: "#9e9e9e",      // サブテキスト色（グレー）
+  cardBg: "rgba(255,255,255,0.05)", // カード背景色（半透明白）
+  cardBorder: "rgba(255,255,255,0.1)", // カード枠線色
+  vipGlow: "#ff4da6"         // VIPボタンの光る色
+};
+
+
+/* ============================================================
+   === PROFILE（プロフィール設定）===
+
+   【プロフィール画像の変更方法】
+   1. avatar.jpg というファイルをこのHTMLと同じフォルダに置く
+   2. 自動的に表示されます（画像がない場合は「K」の文字が表示）
+   3. 別のファイル名を使う場合は avatar: "your-image.jpg" と変更
+
+   【背景画像の変更方法】
+   1. background.jpg というファイルをこのHTMLと同じフォルダに置く
+   2. 自動的に背景に使用されます（ない場合はダーク背景）
+   3. 別のファイル名を使う場合は backgroundImage: "your-bg.jpg" と変更
+   ============================================================ */
+const PROFILE = {
+  name: "Kira Morikawa",
+  avatar: "avatar.jpg",           // プロフィール画像ファイル名（同フォルダに置く）
+  backgroundImage: "background.jpg" // 背景画像ファイル名（同フォルダに置く）
+};
+
+
+/* ============================================================
+   === LINKS（リンク設定）===
+
+   【リンクの追加・編集方法】
+   以下の形式で追加してください：
+   {
+     icon: "🔥",                         // 絵文字アイコン
+     labelKey: "link_fanvue",            // 言語ファイルのキー名（下のLANGUAGESで定義）
+     url: "https://example.com",         // リンク先URL
+     highlight: true,                    // true = 強調表示（Fanvue等に使用）
+     priority: 1                         // 表示順（数字が小さいほど上）
+   }
+
+   highlight: true のリンクは光るデザインで目立ちます
+   ============================================================ */
+const LINKS = [
+  {
+    icon: "💰",
+    labelKey: "link_fanvue",
+    url: "https://fanvue.com/kiramorikawa",
+    highlight: true,
+    priority: 1
+  },
+  {
+    icon: "📸",
+    labelKey: "link_instagram",
+    url: "https://instagram.com/kiramorikawa",
+    highlight: false,
+    priority: 2
+  },
+  {
+    icon: "🎬",
+    labelKey: "link_youtube",
+    url: "https://youtube.com/@kiramorikawa",
+    highlight: false,
+    priority: 3
+  },
+  {
+    icon: "💌",
+    labelKey: "link_dm",
+    url: "https://fanvue.com/kiramorikawa/messages",
+    highlight: false,
+    priority: 4
+  },
+  {
+    icon: "🛍️",
+    labelKey: "link_shop",
+    url: "https://fanvue.com/kiramorikawa/shop",
+    highlight: false,
+    priority: 5
+  }
+];
+
+
+/* ============================================================
+   === LANGUAGES（言語設定）===
+
+   【翻訳の変更方法】
+   各言語のテキストをここで変更できます
+
+   【言語の追加方法】
+   1. 新しい言語ブロックを追加: "xx": { ... }
+   2. flag, name, nativeName を設定
+   3. 他の言語と同じキーを全て翻訳
+   ============================================================ */
+const LANGUAGES = {
+
+  // 日本語
+  "ja": {
+    flag: "🇯🇵",
+    name: "Japanese",
+    nativeName: "日本語",
+    bio: "東京発のライフスタイルクリエイター ✨\nファッション・美容・日常をシェアしています",
+    link_fanvue: "🔥 限定コンテンツを見る（Fanvue）",
+    link_instagram: "Instagramをフォロー",
+    link_youtube: "YouTube チャンネル",
+    link_dm: "💌 ダイレクトメッセージ",
+    link_shop: "🛍️ ショップ",
+    lang_select_title: "言語を選択してください",
+    lang_select_subtitle: "Choose your language",
+    vip_badge: "VIP限定",
+    new_badge: "NEW"
+  },
+
+  // 英語
+  "en": {
+    flag: "🇺🇸",
+    name: "English",
+    nativeName: "English",
+    bio: "Lifestyle creator based in Tokyo ✨\nSharing fashion, beauty & everyday moments",
+    link_fanvue: "🔥 Exclusive Content (Fanvue)",
+    link_instagram: "Follow on Instagram",
+    link_youtube: "YouTube Channel",
+    link_dm: "💌 Send me a DM",
+    link_shop: "🛍️ Shop",
+    lang_select_title: "Choose your language",
+    lang_select_subtitle: "言語を選択してください",
+    vip_badge: "VIP Only",
+    new_badge: "NEW"
+  },
+
+  // 中国語
+  "zh": {
+    flag: "🇨🇳",
+    name: "Chinese",
+    nativeName: "中文",
+    bio: "来自东京的生活方式创作者 ✨\n分享时尚、美妆与日常生活",
+    link_fanvue: "🔥 独家内容（Fanvue）",
+    link_instagram: "关注Instagram",
+    link_youtube: "YouTube 频道",
+    link_dm: "💌 发送私信",
+    link_shop: "🛍️ 商店",
+    lang_select_title: "请选择语言",
+    lang_select_subtitle: "Choose your language",
+    vip_badge: "VIP专属",
+    new_badge: "最新"
+  },
+
+  // 韓国語
+  "ko": {
+    flag: "🇰🇷",
+    name: "Korean",
+    nativeName: "한국어",
+    bio: "도쿄 기반 라이프스타일 크리에이터 ✨\n패션, 뷰티, 일상을 공유합니다",
+    link_fanvue: "🔥 독점 콘텐츠 보기 (Fanvue)",
+    link_instagram: "Instagram 팔로우",
+    link_youtube: "YouTube 채널",
+    link_dm: "💌 DM 보내기",
+    link_shop: "🛍️ 쇼핑",
+    lang_select_title: "언어를 선택하세요",
+    lang_select_subtitle: "Choose your language",
+    vip_badge: "VIP 전용",
+    new_badge: "신규"
+  },
+
+  // ポルトガル語（ブラジル）
+  "pt": {
+    flag: "🇧🇷",
+    name: "Portuguese (BR)",
+    nativeName: "Português",
+    bio: "Criadora de conteúdo de estilo de vida em Tóquio ✨\nCompartilhando moda, beleza e momentos do dia a dia",
+    link_fanvue: "🔥 Conteúdo Exclusivo (Fanvue)",
+    link_instagram: "Seguir no Instagram",
+    link_youtube: "Canal do YouTube",
+    link_dm: "💌 Enviar mensagem",
+    link_shop: "🛍️ Loja",
+    lang_select_title: "Escolha seu idioma",
+    lang_select_subtitle: "Choose your language",
+    vip_badge: "Só VIP",
+    new_badge: "NOVO"
+  }
+
+};
+
+/* ============================================================
+   ここから下は編集不要です
+   You don't need to edit below this line
+   ============================================================ */
+</script>
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0c0c0c;
+    --accent: #ff4da6;
+    --accent2: #c77dff;
+    --text: #f0ede8;
+    --text-muted: #9e9e9e;
+    --card-bg: rgba(255,255,255,0.05);
+    --card-border: rgba(255,255,255,0.1);
+    --glow: #ff4da6;
+  }
+
+  html, body {
+    min-height: 100%;
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ---- BACKGROUND ---- */
+  #bg-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background-color: var(--bg);
+    background-size: cover;
+    background-position: center;
+    transition: filter 0.3s;
+  }
+
+  #bg-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(180deg, rgba(12,12,12,0.6) 0%, rgba(12,12,12,0.85) 50%, rgba(12,12,12,0.97) 100%);
+  }
+
+  /* ---- LANGUAGE SELECTOR ---- */
+  #lang-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(12,12,12,0.97);
+    backdrop-filter: blur(20px);
+    padding: 2rem;
+  }
+
+  #lang-screen h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.4rem, 5vw, 2rem);
+    text-align: center;
+    margin-bottom: 0.4rem;
+    color: var(--text);
+  }
+
+  #lang-screen p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 2.5rem;
+    text-align: center;
+  }
+
+  .lang-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.75rem;
+    width: 100%;
+    max-width: 480px;
+  }
+
+  .lang-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.9rem 1rem;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    color: var(--text);
+    font-size: 0.95rem;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+  }
+
+  .lang-btn:hover {
+    background: rgba(255,77,166,0.12);
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .lang-btn .flag { font-size: 1.4rem; }
+  .lang-btn .native { font-weight: 600; font-size: 0.95rem; }
+  .lang-btn .eng { font-size: 0.75rem; color: var(--text-muted); }
+
+  /* ---- MAIN PAGE ---- */
+  #main-page {
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2.5rem 1.25rem 4rem;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  /* ---- AVATAR ---- */
+  .avatar-wrap {
+    position: relative;
+    margin-bottom: 1.25rem;
+  }
+
+  .avatar-ring {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    padding: 3px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+  }
+
+  .avatar-inner {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .avatar-inner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* ---- PROFILE TEXT ---- */
+  .profile-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 6vw, 2rem);
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 0.6rem;
+    color: var(--text);
+  }
+
+  .profile-bio {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    text-align: center;
+    line-height: 1.7;
+    white-space: pre-line;
+    margin-bottom: 2rem;
+    max-width: 320px;
+  }
+
+  /* ---- LINKS ---- */
+  .links-wrap {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .link-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    color: var(--text);
+    font-size: 0.95rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(.4,0,.2,1);
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    text-align: left;
+  }
+
+  .link-btn:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.25);
+    transform: translateY(-2px) scale(1.01);
+  }
+
+  .link-btn:active { transform: scale(0.98); }
+
+  .link-btn .link-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    width: 28px;
+    text-align: center;
+  }
+
+  .link-btn .link-label { flex: 1; }
+
+  .link-btn .link-arrow {
+    opacity: 0.4;
+    font-size: 0.85rem;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .link-btn:hover .link-arrow {
+    opacity: 0.9;
+    transform: translateX(3px);
+  }
+
+  /* VIP / Highlight style */
+  .link-btn.highlight {
+    background: linear-gradient(135deg, rgba(255,77,166,0.18), rgba(199,125,255,0.12));
+    border: 1px solid rgba(255,77,166,0.5);
+    padding: 1.2rem 1.25rem;
+  }
+
+  .link-btn.highlight:hover {
+    background: linear-gradient(135deg, rgba(255,77,166,0.28), rgba(199,125,255,0.2));
+    border-color: var(--accent);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 32px rgba(255,77,166,0.25);
+  }
+
+  .link-btn.highlight .link-label {
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  .vip-badge {
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    white-space: nowrap;
+    letter-spacing: 0.5px;
+  }
+
+  /* ---- LANG SWITCHER (small button at bottom) ---- */
+  .lang-switch-row {
+    margin-top: 2.5rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .lang-chip {
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--card-border);
+    background: var(--card-bg);
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .lang-chip:hover, .lang-chip.active {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* ---- ANIMATIONS ---- */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(18px);
+    animation: fadeUp 0.55s forwards;
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in:nth-child(1) { animation-delay: 0.05s; }
+  .fade-in:nth-child(2) { animation-delay: 0.12s; }
+  .fade-in:nth-child(3) { animation-delay: 0.18s; }
+  .fade-in:nth-child(4) { animation-delay: 0.22s; }
+  .fade-in:nth-child(5) { animation-delay: 0.27s; }
+  .fade-in:nth-child(6) { animation-delay: 0.32s; }
+  .fade-in:nth-child(7) { animation-delay: 0.37s; }
+  .fade-in:nth-child(8) { animation-delay: 0.42s; }
+
+  /* Glow pulse on VIP button */
+  @keyframes glowPulse {
+    0%, 100% { box-shadow: 0 0 12px rgba(255,77,166,0.2); }
+    50% { box-shadow: 0 0 28px rgba(255,77,166,0.45); }
+  }
+
+  .link-btn.highlight.vip-glow {
+    animation: glowPulse 2.8s ease-in-out infinite;
+  }
+
+  .no-animation * { animation: none !important; transition: none !important; }
+  .no-animation .fade-in { opacity: 1 !important; transform: none !important; }
+</style>
+</head>
+<body>
+
+<!-- Background layers -->
+<div id="bg-layer"></div>
+<div id="bg-overlay"></div>
+
+<!-- Language selector screen -->
+<div id="lang-screen">
+  <h1 id="lang-title">言語を選択してください</h1>
+  <p id="lang-subtitle">Choose your language</p>
+  <div class="lang-grid" id="lang-grid"></div>
+</div>
+
+<!-- Main page -->
+<div id="main-page" style="display:none;">
+  <div class="avatar-wrap fade-in">
+    <div class="avatar-ring">
+      <div class="avatar-inner" id="avatar-inner">K</div>
+    </div>
+  </div>
+
+  <h1 class="profile-name fade-in" id="profile-name"></h1>
+  <p class="profile-bio fade-in" id="profile-bio"></p>
+
+  <div class="links-wrap" id="links-wrap"></div>
+
+  <div class="lang-switch-row" id="lang-switch-row"></div>
+</div>
+
+<script>
+/* =====================================================
+   RUNTIME — DO NOT EDIT BELOW
+   ===================================================== */
+
+let currentLang = "ja";
+
+// Apply CSS variables from COLORS config
+function applyCSSVars() {
+  const r = document.documentElement.style;
+  r.setProperty('--bg', COLORS.background);
+  r.setProperty('--accent', COLORS.accent);
+  r.setProperty('--accent2', COLORS.accentSecondary);
+  r.setProperty('--text', COLORS.text);
+  r.setProperty('--text-muted', COLORS.textMuted);
+  r.setProperty('--card-bg', COLORS.cardBg);
+  r.setProperty('--card-border', COLORS.cardBorder);
+  r.setProperty('--glow', COLORS.vipGlow);
+}
+
+// Setup background image
+function setupBackground() {
+  const bg = document.getElementById('bg-layer');
+  const img = new Image();
+  img.onload = () => {
+    bg.style.backgroundImage = `url('${PROFILE.backgroundImage}')`;
+    if (SETTINGS.blurBackground) bg.style.filter = 'blur(6px) brightness(0.6)';
+  };
+  img.onerror = () => {
+    bg.style.backgroundImage = 'none';
+  };
+  img.src = PROFILE.backgroundImage;
+}
+
+// Setup avatar
+function setupAvatar() {
+  const inner = document.getElementById('avatar-inner');
+  const img = new Image();
+  img.onload = () => {
+    inner.innerHTML = '';
+    inner.appendChild(img);
+  };
+  img.onerror = () => {
+    inner.textContent = PROFILE.name.charAt(0).toUpperCase();
+  };
+  img.src = PROFILE.avatar;
+  img.alt = PROFILE.name;
+  img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:50%;';
+}
+
+// Build language selector screen
+function buildLangScreen() {
+  const grid = document.getElementById('lang-grid');
+  grid.innerHTML = '';
+  const firstLang = Object.values(LANGUAGES)[0];
+  document.getElementById('lang-title').textContent = firstLang.lang_select_title;
+  document.getElementById('lang-subtitle').textContent = firstLang.lang_select_subtitle;
+
+  Object.entries(LANGUAGES).forEach(([code, lang]) => {
+    const btn = document.createElement('button');
+    btn.className = 'lang-btn';
+    btn.innerHTML = `<span class="flag">${lang.flag}</span><div><div class="native">${lang.nativeName}</div><div class="eng">${lang.name}</div></div>`;
+    btn.addEventListener('click', () => selectLang(code));
+    grid.appendChild(btn);
+  });
+}
+
+// Select language and show main page
+function selectLang(code) {
+  currentLang = code;
+  localStorage.setItem('kira_lang', code);
+  hideLangScreen();
+  buildMainPage();
+}
+
+function hideLangScreen() {
+  const ls = document.getElementById('lang-screen');
+  ls.style.opacity = '0';
+  ls.style.transition = 'opacity 0.4s';
+  setTimeout(() => { ls.style.display = 'none'; }, 400);
+}
+
+// Build main page
+function buildMainPage() {
+  const t = LANGUAGES[currentLang] || LANGUAGES["ja"];
+  const page = document.getElementById('main-page');
+  page.style.display = 'flex';
+
+  if (!SETTINGS.animations) {
+    page.classList.add('no-animation');
+  }
+
+  // Profile
+  document.getElementById('profile-name').textContent = PROFILE.name;
+  document.getElementById('profile-bio').textContent = t.bio;
+
+  // Links — sorted by priority
+  const sorted = [...LINKS].sort((a, b) => (a.priority || 99) - (b.priority || 99));
+  const wrap = document.getElementById('links-wrap');
+  wrap.innerHTML = '';
+
+  sorted.forEach((link, i) => {
+    const label = t[link.labelKey] || link.labelKey;
+    const a = document.createElement('a');
+    a.href = link.url;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    a.className = 'link-btn fade-in' +
+      (link.highlight ? ' highlight' : '') +
+      (link.highlight && SETTINGS.vipMode ? ' vip-glow' : '');
+
+    if (SETTINGS.animations) {
+      a.style.animationDelay = (0.25 + i * 0.07) + 's';
+    }
+
+    let badgeHTML = '';
+    if (link.highlight && SETTINGS.vipMode) {
+      badgeHTML = `<span class="vip-badge">${t.vip_badge || 'VIP'}</span>`;
+    }
+
+    a.innerHTML = `
+      <span class="link-icon">${link.icon}</span>
+      <span class="link-label">${label}</span>
+      ${badgeHTML}
+      <span class="link-arrow">›</span>
+    `;
+    wrap.appendChild(a);
+  });
+
+  // Language switcher chips
+  const row = document.getElementById('lang-switch-row');
+  row.innerHTML = '';
+  Object.entries(LANGUAGES).forEach(([code, lang]) => {
+    const chip = document.createElement('button');
+    chip.className = 'lang-chip' + (code === currentLang ? ' active' : '');
+    chip.textContent = lang.flag + ' ' + lang.nativeName;
+    chip.addEventListener('click', () => {
+      currentLang = code;
+      localStorage.setItem('kira_lang', code);
+      buildMainPage();
+      // update chips active state
+      row.querySelectorAll('.lang-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+    });
+    row.appendChild(chip);
+  });
+}
+
+// Init
+function init() {
+  applyCSSVars();
+  setupBackground();
+  setupAvatar();
+
+  // Check saved language
+  const saved = localStorage.getItem('kira_lang');
+
+  if (!SETTINGS.showLanguageSelector && saved && LANGUAGES[saved]) {
+    // Skip lang screen if disabled and we have a saved preference
+    document.getElementById('lang-screen').style.display = 'none';
+    currentLang = saved;
+    buildMainPage();
+  } else if (!SETTINGS.showLanguageSelector) {
+    // Skip lang screen, use first language
+    document.getElementById('lang-screen').style.display = 'none';
+    currentLang = Object.keys(LANGUAGES)[0];
+    buildMainPage();
+  } else {
+    // Show language selector
+    buildLangScreen();
+    // If returning visitor, pre-select last language but still show screen
+    if (saved && LANGUAGES[saved]) currentLang = saved;
+  }
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
